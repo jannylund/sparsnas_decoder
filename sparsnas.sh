@@ -2,9 +2,14 @@
 
 set -o pipefail
 
+if [ "${SPARSNAS_SENSORS}" = "" ]; then
+    echo "ERROR: Please set the value of environment variable SPARSNAS_SENSORS"
+    exit 1;
+fi
+
 #Associatve array
 typeset -A SENSORS
-SENSORS=(id_1 pulses_1 id_2 pulses_2)
+SENSORS=( $(echo $SPARSNAS_SENSORS) )
 
 RTL_SDR=(/usr/bin/rtl_sdr -f 868000000 -s 1024000 -g 40 -)
 #RTL_SDR=(cat /sparsnas.raw)
